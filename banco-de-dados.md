@@ -87,3 +87,163 @@ Com base no conteúdo programático do último edital do concurso do Ministério
 Este resumo aborda os principais tópicos relacionados a "Banco de Dados" que são relevantes para o cargo de Analista do MPU – Desenvolvimento de Sistemas, conforme as orientações do último edital do concurso. Recomenda-se aprofundar o estudo em cada um desses tópicos, utilizando materiais atualizados e realizando exercícios práticos para consolidar o conhecimento.
 
 
+Dando continuidade ao resumo detalhado sobre **Banco de Dados** conforme o conteúdo do último edital do MPU para o cargo de Analista – Desenvolvimento de Sistemas, abordaremos agora aspectos **avançados e práticos**, frequentemente explorados em provas de concursos de alto nível:
+
+---
+
+### **11. Índices e Otimização de Consultas**
+
+* **Índices (Indexes):**
+
+  * Melhoram significativamente o desempenho de consultas em grandes volumes de dados.
+  * Tipos principais:
+
+    * **Índice B-tree**: padrão em SGBDs relacionais.
+    * **Índice Hash**: ideal para consultas com igualdade.
+    * **Índice composto**: criado sobre múltiplas colunas.
+    * **Índice exclusivo (unique)**: garante unicidade dos valores.
+  * Cuidado: uso excessivo de índices pode impactar negativamente operações de escrita (`INSERT`, `UPDATE`, `DELETE`).
+
+* **Otimização de Consultas**:
+
+  * **Planos de execução (Explain Plan)**: mostram como o SGBD executa uma consulta.
+  * Técnicas:
+
+    * Evitar `SELECT *`.
+    * Utilizar filtros (`WHERE`) adequadamente.
+    * Usar índices em colunas filtradas/joinadas.
+    * Evitar subconsultas desnecessárias e preferir `JOIN`.
+
+---
+
+### **12. Procedimentos Armazenados, Funções e Triggers**
+
+* **Procedimentos Armazenados (Stored Procedures):**
+
+  * Blocos de código SQL armazenados no SGBD e executados sob demanda.
+  * Vantagens: reutilização, segurança e melhor desempenho.
+
+* **Funções (Functions):**
+
+  * Retornam valores e podem ser usadas em expressões SQL.
+
+* **Triggers (Gatilhos):**
+
+  * Código que é executado automaticamente em resposta a eventos (`INSERT`, `UPDATE`, `DELETE`).
+  * Utilizadas para auditoria, validação, cálculos automáticos, etc.
+
+---
+
+### **13. Integridade de Dados**
+
+* **Integridade de Entidade:**
+
+  * Garantida pelas **chaves primárias** (não nulas e únicas).
+
+* **Integridade Referencial:**
+
+  * Mantida por meio de **chaves estrangeiras** que referenciam registros válidos em outras tabelas.
+
+* **Regras de Integridade Personalizadas:**
+
+  * Podem ser implementadas com restrições (`CHECK`) e triggers.
+
+---
+
+### **14. Linguagens Procedurais e Extensões do SQL**
+
+* **PL/pgSQL (PostgreSQL)**, **PL/SQL (Oracle)**, **T-SQL (SQL Server)**:
+
+  * Permitem lógica de programação (laços, condicionais) no banco de dados.
+  * Usadas em funções e procedimentos.
+
+---
+
+### **15. Sistemas de Gerenciamento de Banco de Dados (SGBDs)**
+
+* **SGBDs Relacionais Mais Utilizados:**
+
+  * **PostgreSQL**: open-source, avançado em conformidade com o padrão SQL.
+  * **MySQL/MariaDB**: amplamente usados em sistemas web.
+  * **Oracle**: muito usado em grandes corporações; rico em recursos.
+  * **SQL Server**: da Microsoft, possui linguagem T-SQL.
+
+* **SGBDs NoSQL Mais Populares:**
+
+  * **MongoDB**: baseado em documentos (JSON).
+  * **Cassandra**: orientado a colunas, altamente escalável.
+  * **Redis**: banco em memória, ideal para cache e dados voláteis.
+
+---
+
+### **16. Segurança em Banco de Dados**
+
+* **Princípios de Segurança:**
+
+  * Autenticação (identificação do usuário).
+  * Autorização (controle de permissões).
+  * Criptografia de dados sensíveis.
+  * Auditoria de acessos e operações.
+
+* **Técnicas:**
+
+  * **Views** com restrições para limitar acesso.
+  * **Roles** e **perfis de usuário**.
+  * Uso de **TLS/SSL** para conexões seguras.
+
+---
+
+### **17. Backup e Recuperação**
+
+* **Tipos de Backup:**
+
+  * **Completo (full)**: cópia total do banco.
+  * **Incremental**: apenas o que mudou desde o último backup.
+  * **Diferencial**: o que mudou desde o último backup completo.
+
+* **Recuperação:**
+
+  * Recuperação pontual usando logs de transações.
+  * Estratégias de **disaster recovery**.
+
+---
+
+### **18. Replicação e Alta Disponibilidade**
+
+* **Replicação:**
+
+  * Cópia de dados de um servidor (master) para outro (slave/replica).
+  * Usada para balanceamento de carga e redundância.
+
+* **Alta Disponibilidade (HA):**
+
+  * Clusterização.
+  * Failover automático.
+  * Monitoramento ativo de instâncias.
+
+---
+
+### **19. Banco de Dados na Nuvem**
+
+* **Serviços Populares:**
+
+  * **Amazon RDS**, **Google Cloud SQL**, **Azure SQL Database**.
+  * Oferecem escalabilidade automática, backups automatizados, failover.
+
+* **Vantagens:**
+
+  * Escalabilidade, disponibilidade, manutenção reduzida.
+  * Modelo **DBaaS (Database as a Service)**.
+
+---
+
+### **20. Tendências e Novas Tecnologias**
+
+* **Bancos Multimodelo**: suportam diferentes modelos (relacional + documentos + grafos).
+* **Graph Databases**: como Neo4j, otimizados para armazenar redes de relacionamentos.
+* **Data Lakes**: para grandes volumes de dados não estruturados.
+* **Analytics em tempo real**: uso de bancos como Apache Druid ou ClickHouse.
+
+---
+
+
