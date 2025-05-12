@@ -481,4 +481,177 @@ Se quiser algo mais simples:
 
 ---
 
+Perfeito! Abaixo está o **passo a passo para rodar e testar seu banco MySQL no VS Code**:
+
+---
+
+## ✅ **1. Instalar o MySQL**
+
+* Baixe e instale o **MySQL Server**:
+  👉 [https://dev.mysql.com/downloads/mysql/](https://dev.mysql.com/downloads/mysql/)
+* Durante a instalação, defina:
+
+  * Porta (geralmente 3306)
+  * Usuário: `root`
+  * Senha: defina e anote
+
+---
+
+## ✅ **2. Instalar extensões no VS Code**
+
+* Abra o VS Code e instale:
+  🔹 **SQLTools**
+  🔹 **SQLTools MySQL/MariaDB Plugin**
+
+---
+
+## ✅ **3. Criar arquivo de script**
+
+* No VS Code, crie um arquivo: `lanchonete.sql`
+* Cole o código SQL que forneci anteriormente.
+
+---
+
+## ✅ **4. Configurar conexão com MySQL no SQLTools**
+
+1. Clique no ícone do **SQLTools** (barra lateral esquerda).
+2. Clique em **"Add New Connection"**.
+3. Escolha **MySQL/MariaDB**.
+4. Preencha:
+
+   * **Name**: `MySQL Local`
+   * **Server/Host**: `localhost`
+   * **Port**: `3306`
+   * **User**: `root`
+   * **Password**: (sua senha definida no passo 1)
+   * **Database**: (você pode deixar vazio ou criar manualmente depois)
+5. Clique em **"Test Connection"** → deve aparecer "Connection success".
+
+---
+
+## ✅ **5. Executar os comandos SQL**
+
+* Com o arquivo `lanchonete.sql` aberto:
+
+  * Selecione o código que deseja rodar
+  * Clique com o botão direito → **"Run Query"** (ou `Ctrl+E`)
+
+---
+
+## ✅ **6. Verificar estrutura e dados**
+
+Você pode usar o terminal SQL (pelo próprio SQLTools ou pelo MySQL Workbench) para consultar:
+
+```sql
+SHOW DATABASES;
+USE lanchonete_db;
+SHOW TABLES;
+SELECT * FROM clientes;
+```
+
+---
+
+Ótimo! Abaixo está um **projeto exemplo completo** para usar no VS Code com MySQL, incluindo:
+
+---
+
+## 📁 **Estrutura do Projeto**
+
+```
+lanchonete-sql/
+│
+├── lanchonete.sql         ← Script com criação do banco e tabelas
+├── dados_exemplo.sql      ← Inserções de exemplo
+└── README.txt             ← Instruções de uso
+```
+
+---
+
+## 📜 **1. lanchonete.sql** (criação do banco e tabelas)
+
+```sql
+CREATE DATABASE lanchonete_db;
+USE lanchonete_db;
+
+CREATE TABLE clientes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    telefone VARCHAR(20)
+);
+
+CREATE TABLE produtos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    preco DECIMAL(10,2) NOT NULL,
+    estoque INT NOT NULL
+);
+
+CREATE TABLE vendas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    data_venda DATE NOT NULL,
+    id_cliente INT,
+    FOREIGN KEY (id_cliente) REFERENCES clientes(id)
+);
+
+CREATE TABLE itens_venda (
+    id_venda INT,
+    id_produto INT,
+    quantidade INT NOT NULL,
+    preco_unitario DECIMAL(10,2) NOT NULL,
+    PRIMARY KEY (id_venda, id_produto),
+    FOREIGN KEY (id_venda) REFERENCES vendas(id),
+    FOREIGN KEY (id_produto) REFERENCES produtos(id)
+);
+```
+
+---
+
+## 📜 **2. dados\_exemplo.sql** (inserções básicas para teste)
+
+```sql
+USE lanchonete_db;
+
+INSERT INTO clientes (nome, telefone) VALUES
+('Maria', '11999999999'),
+('João', '11888888888');
+
+INSERT INTO produtos (nome, preco, estoque) VALUES
+('Coxinha', 6.00, 100),
+('Refrigerante', 5.00, 50);
+
+INSERT INTO vendas (data_venda, id_cliente) VALUES
+('2025-05-12', 1);
+
+INSERT INTO itens_venda (id_venda, id_produto, quantidade, preco_unitario) VALUES
+(1, 1, 2, 6.00),
+(1, 2, 1, 5.00);
+```
+
+---
+
+## 📄 **3. README.txt** (instruções para importar no VS Code)
+
+```
+1. Instale as extensões:
+   - SQLTools
+   - SQLTools MySQL/MariaDB Plugin
+
+2. Crie uma conexão com seu MySQL local:
+   - Host: localhost
+   - Porta: 3306
+   - Usuário: root
+   - Senha: (sua senha)
+
+3. Abra 'lanchonete.sql' e execute tudo (Ctrl+A e depois Ctrl+E)
+4. Abra 'dados_exemplo.sql' e execute para popular os dados
+5. Faça SELECTs de teste como:
+
+   SELECT * FROM clientes;
+   SELECT * FROM produtos;
+   SELECT * FROM vendas;
+```
+
+---
+
+### 🔽 Deseja que eu gere um **.zip com os arquivos prontos** para download? Posso enviar aqui. Deseja isso?
 
