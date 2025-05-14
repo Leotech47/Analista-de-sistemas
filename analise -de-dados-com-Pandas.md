@@ -241,7 +241,7 @@ plt.tight_layout()
 ### 💾 **Salvar e Exibir o Gráfico**
 
 ```python
-plt.savefig("grafico_feriados_2025.png")
+plt.savefig("grafico_planilha.png")
 ```
 
 * Salva o gráfico como um arquivo de imagem `.png`.
