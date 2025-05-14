@@ -8,4 +8,3 @@
 | Rede            | 3          | Roteamento e endereçamento lógico (IP)       | Pacote          | Endereços IP de origem e destino                  |
 | Enlace de Dados | 2          | Endereçamento físico (MAC), acesso ao meio   | Quadro (Frame)  | Endereços MAC + Detecção de erro (FCS)            |
 | Física          | 1          | Transmissão de bits no meio físico           | Bits            | Conversão para sinais (elétricos, ópticos, rádio) |
-| --------------- | ---------- | -------------------------------------------- | --------------- | ------------------------------------------------- |
