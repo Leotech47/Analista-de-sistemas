@@ -253,3 +253,69 @@ Neste exemplo, a sequência de dados é detalhada camada por camada, desde o con
 - **Roteador** reencapsula e atualiza o cabeçalho IP.
 
 
+# Exemplo de comunicação entre 2 Hosts na mesma rede:
+ Abaixo está um **esquema gráfico em linguagem Markdown**, simulando toda a jornada de um dado desde a **camada de aplicação de um endpoint (PC A)** até a **camada de aplicação de outro endpoint (PC B)** **na mesma rede**, passando por um **switch**.
+
+
+# 🖥️📡 Esquema: Transmissão de Dados em uma Rede Local (LAN)
+
+## 📍 Situação:
+- Dois dispositivos na mesma rede: **PC A (192.168.1.10)** → **PC B (192.168.1.20)**
+- Interligados por um **switch**
+- Comunicação via protocolo TCP (porta 80)
+
+## 📶 Fluxo das Camadas (Modelo OSI)
+
+PC A (Origem)
+┌─────────────────────────────┐
+│ 7. Aplicação                │ ➜ "GET /index.html"
+├─────────────────────────────┤
+│ 6. Apresentação             │ ➜ Codificação (UTF-8)
+├─────────────────────────────┤
+│ 5. Sessão                   │ ➜ Estabelecimento de sessão
+├─────────────────────────────┤
+│ 4. Transporte               │ ➜ TCP (porta 5000 → 80)
+├─────────────────────────────┤
+│ 3. Rede                     │ ➜ IP (192.168.1.10 → 192.168.1.20)
+├─────────────────────────────┤
+│ 2. Enlace de Dados          │ ➜ Ethernet (MAC A → MAC B)
+├─────────────────────────────┤
+│ 1. Física                   │ ➜ Sinais elétricos no cabo
+└─────────────────────────────┘
+⬇
+(Switch - lê camada 2)
+⬇
+PC B (Destino)
+┌─────────────────────────────┐
+│ 1. Física                   │ ⬅ Sinais recebidos
+├─────────────────────────────┤
+│ 2. Enlace de Dados          │ ⬅ Ethernet (MAC A → MAC B)
+├─────────────────────────────┤
+│ 3. Rede                     │ ⬅ IP (192.168.1.10 → 192.168.1.20)
+├─────────────────────────────┤
+│ 4. Transporte               │ ⬅ TCP (porta 5000 → 80)
+├─────────────────────────────┤
+│ 5. Sessão                   │ ⬅ Sessão ativa
+├─────────────────────────────┤
+│ 6. Apresentação             │ ⬅ Decodificação
+├─────────────────────────────┤
+│ 7. Aplicação                │ ⬅ Interpreta "GET /index.html"
+└─────────────────────────────┘
+
+## 🛠️ Papel do **Switch**
+
+- 📍 Atua na **Camada 2 (Enlace de Dados)**
+- 📦 Lê o **endereço MAC de destino**
+- 🔁 Encaminha o quadro para a porta correspondente ao **MAC de PC B**
+- ❌ **Não altera** o quadro nem os dados
+
+## ✅ Conclusão
+
+- Todos os dados são **encapsulados** no PC A.
+- O switch apenas **comuta o quadro** com base nos MACs.
+- O PC B **desencapsula** os dados e entrega à aplicação.
+- Toda a comunicação **permanece dentro da LAN** (sem roteador).
+
+
+# Exemplo de comunicação entre 2 Hosts em redes doferentes:
+
