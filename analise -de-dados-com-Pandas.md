@@ -60,11 +60,30 @@ df.describe(include='all').to_excel("resumo_estatistico.xlsx")
 * Se for um `.csv`, troque `read_excel` por `read_csv`.
 * Se quiser gráficos, posso incluir com Matplotlib ou Seaborn.
 
+Perfeito. Aqui está o código Python atualizado para:
+
+✅ Ler o arquivo diretamente de um **arquivo Excel** (`planilha.xlsx`)
+✅ Analisar a quantidade por tipo
+✅ Gerar gráfico com `matplotlib`
+
+### 📁 Estrutura esperada do Excel:
+
+O Excel deve conter ao menos as colunas:
+
+* `data` (formato: `YYYY-MM-DD`)
+* `evento`
+* `tipo` (ex: Feriado, Ponto facultativo, Feriado forense, etc.)
+
+---
+
+### ✅ Código atualizado:
+
+```python
 import pandas as pd
 import matplotlib.pyplot as plt
 
 # Leitura do arquivo Excel
-arquivo = "feriados_2025.xlsx"  # Caminho do arquivo
+arquivo = "planilha.xlsx"  # Caminho do arquivo
 df = pd.read_excel(arquivo)
 
 # Verificação rápida (opcional)
@@ -87,8 +106,18 @@ plt.grid(axis='y', linestyle='--', alpha=0.7)
 plt.tight_layout()
 
 # Salva gráfico
-plt.savefig("grafico_feriados_2025.png")
+plt.savefig("grafico_planilha.png")
 plt.show()
+```
 
+---
 
+### ✅ Requisitos:
+
+**Certifique-se de que o arquivo `planilha.xlsx` está no mesmo diretório do script (ou ajuste o caminho).**
+Instale as bibliotecas, se necessário:
+
+```bash
+pip install pandas matplotlib openpyxl
+```
 
