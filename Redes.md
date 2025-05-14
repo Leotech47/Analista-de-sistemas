@@ -164,3 +164,92 @@ Este é o processo passo a passo de como os dados são preparados, encapsulados 
 
 
 Neste exemplo, a sequência de dados é detalhada camada por camada, desde o conteúdo da aplicação até os sinais binários que são efetivamente transmitidos pela rede.
+
+
+# Abaixo está um exemplo prático, mostrando como um pacote gerado em um endpoint é **modificado (não alterado em seu conteúdo interno)** por um **switch** e um **roteador** ao ser enviado por uma rede.
+
+
+# 📦 Exemplo Prático de Pacote Atravessando Switch e Roteador
+
+### 🎯 Contexto:
+- Um cliente `PC A (IP 192.168.1.10)` envia uma requisição HTTP para `Servidor Web (IP 8.8.8.8)`.
+- O pacote passa por:
+  1. **Switch da LAN**
+  2. **Roteador de borda**
+
+## 🧱 1. Pacote gerado pelo endpoint (PC A)
+
+📦 Dados:
+"GET /index.html HTTP/1.1"
+
+📨 Cabeçalho TCP:
+
+* Porta de origem: 5000
+* Porta de destino: 80
+
+🌐 Cabeçalho IP:
+
+* IP origem: 192.168.1.10
+* IP destino: 8.8.8.8
+* TTL: 64
+
+🔗 Cabeçalho Ethernet:
+
+* MAC origem: AA\:AA\:AA\:AA\:AA\:AA
+* MAC destino: BB\:BB\:BB\:BB\:BB\:BB (MAC do gateway/roteador)
+
+
+## 🔁 2. Switch da LAN (Camada 2)
+
+🛠 Ação:
+
+* Lê cabeçalho Ethernet.
+* Verifica MAC destino.
+* Redireciona o quadro para a porta correta.
+
+✅ Alterações:
+
+* Nenhuma modificação no pacote.
+* Apenas comutação do quadro.
+
+📦 Pacote permanece **exatamente igual**.
+
+
+## 🌐 3. Roteador (Camada 3)
+
+🛠 Ação:
+
+* Lê cabeçalho IP.
+* Decrementa TTL (de 64 para 63).
+* Recalcula checksum IP.
+* Substitui cabeçalho Ethernet com novo MAC de destino.
+
+✅ Modificações:
+🔄 Cabeçalho IP:
+
+* TTL: **63**
+* Checksum: **recalculado**
+
+🔗 Novo cabeçalho Ethernet:
+
+* MAC origem: CC\:CC\:CC\:CC\:CC\:CC (interface do roteador de saída)
+* MAC destino: DD\:DD\:DD\:DD\:DD\:DD (próximo salto - ex: gateway do provedor)
+
+📦 Dados da aplicação e TCP **inalterados**.
+
+## 📡 Pacote enviado pela rede externa
+
+\[Ethernet]  CC\:CC\:CC\:CC → DD\:DD\:DD\:DD
+\[IP]        192.168.1.10 → 8.8.8.8 | TTL: 63
+\[TCP]       5000 → 80
+\[Data]      "GET /index.html HTTP/1.1"
+
+
+### ✅ Conclusão:
+
+- O **conteúdo original do pacote (camadas 4 a 7)** continua intacto.
+- Apenas o **TTL** e o **cabeçalho Ethernet** são modificados no caminho.
+- **Switch** apenas comuta.
+- **Roteador** reencapsula e atualiza o cabeçalho IP.
+
+
