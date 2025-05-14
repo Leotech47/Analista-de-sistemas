@@ -267,14 +267,14 @@ Neste exemplo, a sequência de dados é detalhada camada por camada, desde o con
 ## 📶 Fluxo das Camadas (Modelo OSI)
 
 ## PC A (Origem)
-│ 7. Aplicação                │ ➜ "GET /index.html"                |
-| --------------------------- | ----------------------------------- |
-│ 6. Apresentação             │ ➜ Codificação (UTF-8)              |
-│ 5. Sessão                   │ ➜ Estabelecimento de sessão        |
-│ 4. Transporte               │ ➜ TCP (porta 5000 → 80)            |
-│ 3. Rede                     │ ➜ IP (192.168.1.10 → 192.168.1.20) |
-│ 2. Enlace de Dados          │ ➜ Ethernet (MAC A → MAC B)         |
-│ 1. Física                   │ ➜ Sinais elétricos no cabo         |
+│ 7 | Aplicação                │ ➜ "GET /index.html"                |
+|   |------------------------- | ----------------------------------- |
+│ 6 | Apresentação             │ ➜ Codificação (UTF-8)              |
+│ 5 | Sessão                   │ ➜ Estabelecimento de sessão        |
+│ 4 | Transporte               │ ➜ TCP (porta 5000 → 80)            |
+│ 3 | Rede                     │ ➜ IP (192.168.1.10 → 192.168.1.20) |
+│ 2 | Enlace de Dados          │ ➜ Ethernet (MAC A → MAC B)         |
+│ 1 | Física                   │ ➜ Sinais elétricos no cabo         |
 
 ⬇
 (Switch - lê camada 2)
