@@ -267,6 +267,7 @@ Neste exemplo, a sequência de dados é detalhada camada por camada, desde o con
 ## 📶 Fluxo das Camadas (Modelo OSI)
 
 ## PC A (Origem)
+
 │ 7 | Aplicação                │ ➜ "GET /index.html"                |
 |   |------------------------- | ----------------------------------- |
 │ 6 | Apresentação             │ ➜ Codificação (UTF-8)              |
@@ -280,14 +281,15 @@ Neste exemplo, a sequência de dados é detalhada camada por camada, desde o con
 (Switch - lê camada 2)
 ⬇
 ## PC B (Destino)
-│ 1. Física                   │ ⬅ Sinais recebidos
-| --------------------------- | ------------------------------------|
-│ 2. Enlace de Dados          │ ⬅ Ethernet (MAC A → MAC B)         |
-│ 3. Rede                     │ ⬅ IP (192.168.1.10 → 192.168.1.20) |
-│ 4. Transporte               │ ⬅ TCP (porta 5000 → 80)            |
-│ 5. Sessão                   │ ⬅ Sessão ativa                     |
-│ 6. Apresentação             │ ⬅ Decodificação                    |
-│ 7. Aplicação                │ ⬅ Interpreta "GET /index.html"     |
+
+│ 1 | Física                   │ ⬅ Sinais recebidos                |
+|   |--------------------------| -----------------------------------|
+│ 2 | Enlace de Dados          │ ⬅ Ethernet (MAC A → MAC B)        |
+│ 3 | Rede                     │ ⬅ IP (192.168.1.10 → 192.168.1.20)|
+│ 4 | Transporte               │ ⬅ TCP (porta 5000 → 80)           |
+│ 5 |Sessão                    │ ⬅ Sessão ativa                    |
+│ 6 | Apresentação             │ ⬅ Decodificação                   |
+│ 7 | Aplicação                │ ⬅ Interpreta "GET /index.html"    |
 
 ## 🛠️ Papel do **Switch**
 
