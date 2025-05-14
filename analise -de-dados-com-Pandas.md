@@ -60,3 +60,35 @@ df.describe(include='all').to_excel("resumo_estatistico.xlsx")
 * Se for um `.csv`, troque `read_excel` por `read_csv`.
 * Se quiser gráficos, posso incluir com Matplotlib ou Seaborn.
 
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Leitura do arquivo Excel
+arquivo = "feriados_2025.xlsx"  # Caminho do arquivo
+df = pd.read_excel(arquivo)
+
+# Verificação rápida (opcional)
+print(df.head())
+
+# Análise: contagem por tipo de evento
+analise_tipo = df['tipo'].value_counts()
+
+print("\nAnálise por tipo de evento:")
+print(analise_tipo)
+
+# Geração do gráfico
+plt.figure(figsize=(10, 6))
+analise_tipo.plot(kind='bar', color='skyblue', edgecolor='black')
+plt.title('Quantidade de Feriados e Pontos Facultativos por Tipo - 2025')
+plt.xlabel('Tipo')
+plt.ylabel('Quantidade')
+plt.xticks(rotation=45)
+plt.grid(axis='y', linestyle='--', alpha=0.7)
+plt.tight_layout()
+
+# Salva gráfico
+plt.savefig("grafico_feriados_2025.png")
+plt.show()
+
+
+
