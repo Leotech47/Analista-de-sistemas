@@ -275,6 +275,7 @@ Neste exemplo, a sequência de dados é detalhada camada por camada, desde o con
 │ 3. Rede                     │ ➜ IP (192.168.1.10 → 192.168.1.20) |
 │ 2. Enlace de Dados          │ ➜ Ethernet (MAC A → MAC B)         |
 │ 1. Física                   │ ➜ Sinais elétricos no cabo         |
+
 ⬇
 (Switch - lê camada 2)
 ⬇
