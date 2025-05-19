@@ -1,3 +1,4 @@
+![Logo do projeto](/logo.png)
 
 
 # Quais as atribuições de um Analista do MPU/Desenvolvimento de sistemas:
