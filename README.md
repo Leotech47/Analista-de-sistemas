@@ -1,5 +1,4 @@
-![Logo do projeto](/logo.png)
-
+<img src="https://github.com/Leotech47/Analista-de-sistemas/blob/main/logo.png?raw=true" width="1100" height="500" />
 
 # Quais as atribuições de um Analista do MPU/Desenvolvimento de sistemas:
 
