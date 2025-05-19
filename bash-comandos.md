@@ -240,3 +240,10 @@ echo "✅ Processo concluído com sucesso!"
 ⚠️ **Importante**: Edite a linha do `scp` com os dados do seu servidor remoto antes de executar.
 
 Se quiser, posso gerar esse script em arquivo `.sh` para download. Deseja isso?
+
+
+Aqui está o arquivo script `.sh` pronto para uso:
+
+[organizar\_relatorios.sh](sandbox:/mnt/data/organizar_relatorios.sh)
+
+Baixe, edite a linha do comando `scp` com seus dados reais, dê permissão de execução e execute no seu terminal.
