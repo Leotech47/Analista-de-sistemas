@@ -1,4 +1,4 @@
-<img src="https://github.com/Leotech47/Analista-de-sistemas/blob/main/logo.png?raw=true" width="980" height="380" />
+<img src="https://github.com/Leotech47/Analista-de-sistemas/blob/main/logo.png?raw=true" width="1000" height="380" />
 
 # Quais as atribuições de um Analista do MPU/Desenvolvimento de sistemas:
 
