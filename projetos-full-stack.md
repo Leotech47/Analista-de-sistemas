@@ -1478,3 +1478,75 @@ O projeto completo foi estruturado e documentado no canvas ao lado, com:
 * Notificações automáticas com `node-cron`
 
 Se quiser, posso gerar um repositório GitHub ou zipar os arquivos para você baixar. Deseja isso?
+
+Claro! Para facilitar o acesso e a colaboração, você pode criar um repositório no GitHub para hospedar o projeto da hamburgueria com todas as funcionalidades que discutimos. Aqui estão os passos para criar e configurar o repositório:
+
+---
+
+### 🛠️ Passo a passo para criar o repositório no GitHub
+
+1. **Acesse o GitHub**: Vá para [github.com](https://github.com) e faça login na sua conta.
+
+2. **Crie um novo repositório**:
+
+   * Clique no botão **"New"** ou vá para [https://github.com/new](https://github.com/new).
+   * Nomeie o repositório como `hamburgueria-mercadopago`.
+   * Adicione uma descrição, por exemplo: *"Projeto completo de hamburgueria com painel administrativo, integração com Mercado Pago e notificações via e-mail e WhatsApp."*
+   * Escolha se o repositório será **público** ou **privado**.
+   * Marque a opção **"Initialize this repository with a README"** para incluir um arquivo README inicial.
+   * Clique em **"Create repository"**.
+
+3. **Clone o repositório para sua máquina local**:
+
+   ```bash
+   git clone https://github.com/seu-usuario/hamburgueria-mercadopago.git
+   ```
+
+   Substitua `seu-usuario` pelo seu nome de usuário no GitHub.
+
+4. **Adicione os arquivos do projeto**:
+
+   * Copie todos os arquivos e pastas do projeto para o diretório clonado.
+   * Certifique-se de incluir:
+
+     * Backend (`backend/`)
+     * Frontend (`frontend/`)
+     * Scripts de banco de dados (`database/init.sql`)
+     * Arquivo `.env.example` com as variáveis de ambiente necessárias
+
+5. **Faça o commit e envie para o GitHub**:
+
+   ```bash
+   cd hamburgueria-mercadopago
+   git add .
+   git commit -m "Adiciona projeto completo da hamburgueria"
+   git push origin main
+   ```
+
+---
+
+### 📄 Estrutura sugerida para o README.md
+
+Inclua no arquivo `README.md` as seguintes seções para orientar outros desenvolvedores:
+
+* **Descrição do Projeto**: Breve resumo das funcionalidades.
+* **Tecnologias Utilizadas**: Lista das principais tecnologias e frameworks.
+* **Instalação**: Passos para configurar o ambiente local.
+* **Uso**: Instruções para executar o projeto.
+* **Configuração**: Detalhes sobre as variáveis de ambiente e serviços externos (Mercado Pago, Twilio, etc.).
+* **Contribuição**: Diretrizes para contribuir com o projeto.
+* **Licença**: Informações sobre a licença do projeto.
+
+---
+
+### 🔗 Recursos adicionais
+
+Para facilitar a integração com o Mercado Pago, você pode consultar os repositórios oficiais:
+
+* [Mercado Pago Developers no GitHub](https://github.com/mercadopago)
+* [Exemplo de integração com Checkout Bricks](https://github.com/mercadopago/wallet-brand-bricks-sample)
+
+---
+
+Se desejar, posso auxiliá-lo na criação do repositório ou fornecer um modelo de README.md personalizado. Gostaria de prosseguir com alguma dessas opções?
+
