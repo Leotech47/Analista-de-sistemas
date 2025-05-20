@@ -341,3 +341,137 @@ Se desejar, posso auxiliá-lo na personalização do projeto para atender a requ
 
 [1]: https://github.com/ioanat94/burgrrr?utm_source=chatgpt.com "ioanat94/burgrrr: A full stack food ordering app for a ... - GitHub"
 [2]: https://github.com/chandumaram/food-del?utm_source=chatgpt.com "chandumaram/food-del: Full Stack Food Ordering Website ... - GitHub"
+
+
+Perfeito. Abaixo está um **guia objetivo e passo a passo** para integrar o **Mercado Pago** como meio de pagamento online no seu projeto **full stack (React + Node.js)** para a hamburgueria.
+
+---
+
+## 💳 Integração do Mercado Pago no Projeto
+
+### 📌 Visão Geral do Fluxo
+
+1. Cliente seleciona os produtos e finaliza o pedido.
+2. Frontend envia os dados do pedido para o backend.
+3. Backend cria uma **preferência de pagamento** com a API do Mercado Pago.
+4. Backend retorna o `init_point` (link do pagamento).
+5. Frontend redireciona o cliente para o Mercado Pago.
+6. Cliente paga → Mercado Pago envia o status do pagamento.
+7. Backend atualiza o pedido conforme status.
+
+---
+
+## 🧾 1. Criar Conta e Obter as Credenciais
+
+1. Acesse: [https://www.mercadopago.com.br/developers/panel](https://www.mercadopago.com.br/developers/panel)
+2. Crie uma conta de desenvolvedor.
+3. Obtenha sua **Access Token** (backend) e **Public Key** (frontend).
+
+---
+
+## ⚙️ 2. Backend – Node.js + Express
+
+### 📦 Instale o SDK
+
+```bash
+npm install mercadopago
+```
+
+### 📁 Arquivo `.env`
+
+```env
+MERCADOPAGO_ACCESS_TOKEN=SEU_ACCESS_TOKEN_AQUI
+```
+
+### 🔧 Configuração no `server.js` ou `index.js`
+
+```js
+const mercadopago = require('mercadopago');
+require('dotenv').config();
+
+mercadopago.configure({
+  access_token: process.env.MERCADOPAGO_ACCESS_TOKEN,
+});
+```
+
+### 🔁 Criar rota de pagamento `/pagamento`
+
+```js
+app.post('/pagamento', async (req, res) => {
+  const { itens, cliente } = req.body;
+
+  const preference = {
+    items: itens.map(item => ({
+      title: item.nome,
+      quantity: item.quantidade,
+      currency_id: "BRL",
+      unit_price: item.preco
+    })),
+    payer: {
+      name: cliente.nome,
+      email: cliente.email,
+    },
+    back_urls: {
+      success: "https://hamburgueria.com/sucesso",
+      failure: "https://hamburgueria.com/erro",
+    },
+    auto_return: "approved"
+  };
+
+  try {
+    const response = await mercadopago.preferences.create(preference);
+    return res.status(200).json({ init_point: response.body.init_point });
+  } catch (error) {
+    console.error("Erro Mercado Pago:", error);
+    return res.status(500).json({ error: "Falha ao criar pagamento" });
+  }
+});
+```
+
+---
+
+## 🎯 3. Frontend – React
+
+### 🔁 Enviar pedido para o backend
+
+```js
+import axios from 'axios';
+
+const criarPagamento = async (pedido) => {
+  const response = await axios.post('/pagamento', pedido);
+  window.location.href = response.data.init_point; // Redireciona para Mercado Pago
+};
+```
+
+---
+
+## 📡 4. Notificações e Atualização de Pedidos (opcional)
+
+Você pode configurar notificações (webhooks) do Mercado Pago para atualizar o status do pagamento automaticamente.
+
+```js
+app.post('/webhook', async (req, res) => {
+  const data = req.body;
+  // Verifique status do pagamento com a API
+  res.sendStatus(200);
+});
+```
+
+---
+
+## 🧪 Testes
+
+Use [https://www.mercadopago.com.br/developers/panel/testing](https://www.mercadopago.com.br/developers/panel/testing) para testar pagamentos com cartões de teste, sem precisar de cartão real.
+
+---
+
+## ✅ Considerações
+
+* **Ambiente de testes:** Por padrão, o sistema estará em sandbox até você migrar para produção.
+* **Segurança:** Nunca exponha o `access_token` no frontend.
+* **Back\_urls:** Use rotas no frontend para receber os resultados do pagamento (sucesso, erro).
+
+---
+
+Se quiser, posso gerar os trechos completos de código para frontend e backend já adaptados ao seu projeto. Deseja isso?
+
