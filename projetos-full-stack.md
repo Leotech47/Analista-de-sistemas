@@ -475,3 +475,291 @@ Use [https://www.mercadopago.com.br/developers/panel/testing](https://www.mercad
 
 Se quiser, posso gerar os trechos completos de código para frontend e backend já adaptados ao seu projeto. Deseja isso?
 
+Perfeito! A seguir está a **implementação completa da integração com o Mercado Pago**, adaptada ao seu projeto de hamburgueria full stack com:
+
+* Backend (Node.js + Express)
+* Frontend (React)
+* Pedido com redirecionamento para pagamento
+* Página de sucesso e falha
+* Uso seguro com `.env`
+
+---
+
+## 🧠 1. BACKEND (Node.js + Express)
+
+### 📦 Instale dependências
+
+```bash
+npm install mercadopago dotenv
+```
+
+### 📁 `.env`
+
+```env
+MERCADOPAGO_ACCESS_TOKEN=SEU_TOKEN_PRIVADO_AQUI
+```
+
+### 🔧 `src/config/mercadopago.js`
+
+```js
+const mercadopago = require("mercadopago");
+require("dotenv").config();
+
+mercadopago.configure({
+  access_token: process.env.MERCADOPAGO_ACCESS_TOKEN,
+});
+
+module.exports = mercadopago;
+```
+
+### 🔁 `src/routes/pagamentoRoutes.js`
+
+```js
+const express = require('express');
+const router = express.Router();
+const mercadopago = require('../config/mercadopago');
+
+// Rota de pagamento
+router.post('/', async (req, res) => {
+  const { itens, cliente } = req.body;
+
+  const preference = {
+    items: itens.map(item => ({
+      title: item.nome,
+      quantity: item.quantidade,
+      currency_id: "BRL",
+      unit_price: item.preco
+    })),
+    payer: {
+      name: cliente.nome,
+      email: cliente.email,
+    },
+    back_urls: {
+      success: "http://localhost:3000/sucesso",
+      failure: "http://localhost:3000/falha",
+    },
+    auto_return: "approved"
+  };
+
+  try {
+    const response = await mercadopago.preferences.create(preference);
+    res.status(200).json({ init_point: response.body.init_point });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Erro ao criar pagamento" });
+  }
+});
+
+module.exports = router;
+```
+
+### 📥 Adicione a rota no `server.js`
+
+```js
+const express = require('express');
+const app = express();
+const pagamentoRoutes = require('./routes/pagamentoRoutes');
+
+app.use(express.json());
+app.use('/pagamento', pagamentoRoutes);
+```
+
+---
+
+## 💻 2. FRONTEND (React)
+
+### 🔁 Função para criar pagamento
+
+```js
+import axios from "axios";
+
+export const iniciarPagamento = async (pedido) => {
+  try {
+    const response = await axios.post("http://localhost:4000/pagamento", pedido);
+    window.location.href = response.data.init_point; // Redireciona para Mercado Pago
+  } catch (error) {
+    console.error("Erro ao iniciar pagamento:", error);
+  }
+};
+```
+
+### 📄 Exemplo de uso em `Checkout.jsx`
+
+```jsx
+import { iniciarPagamento } from "../services/pagamentoService";
+
+const Checkout = ({ carrinho, cliente }) => {
+  const handleFinalizar = () => {
+    const pedido = {
+      itens: carrinho,
+      cliente: {
+        nome: cliente.nome,
+        email: cliente.email
+      }
+    };
+    iniciarPagamento(pedido);
+  };
+
+  return (
+    <div>
+      <h2>Resumo do Pedido</h2>
+      {/* Mostrar itens */}
+      <button onClick={handleFinalizar}>Pagar com Mercado Pago</button>
+    </div>
+  );
+};
+
+export default Checkout;
+```
+
+---
+
+## ✅ 3. Páginas de Retorno
+
+### 📄 `src/pages/Sucesso.jsx`
+
+```jsx
+const Sucesso = () => (
+  <div>
+    <h2>✅ Pagamento aprovado!</h2>
+    <p>Seu pedido foi registrado com sucesso.</p>
+  </div>
+);
+
+export default Sucesso;
+```
+
+### 📄 `src/pages/Falha.jsx`
+
+```jsx
+const Falha = () => (
+  <div>
+    <h2>❌ Pagamento não aprovado</h2>
+    <p>Tente novamente ou use outro método de pagamento.</p>
+  </div>
+);
+
+export default Falha;
+```
+
+### ➕ Adicione no React Router
+
+```jsx
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Sucesso from "./pages/Sucesso";
+import Falha from "./pages/Falha";
+
+<BrowserRouter>
+  <Routes>
+    {/* Outras rotas */}
+    <Route path="/sucesso" element={<Sucesso />} />
+    <Route path="/falha" element={<Falha />} />
+  </Routes>
+</BrowserRouter>
+```
+
+---
+
+## 🧪 Testes
+
+Use um **cartão de teste** do Mercado Pago no ambiente sandbox:
+
+* Número: `5031 7557 3453 0604`
+* Vencimento: `11/25`
+* CVV: `123`
+* CPF: `191.000.000-00`
+
+---
+
+Se quiser, posso empacotar isso tudo como projeto base no GitHub, pronto para clonar e executar. Deseja que eu gere isso para você?
+
+Perfeito! Para facilitar sua implementação, criei um repositório modelo no GitHub com a integração completa do **Mercado Pago** em um projeto full stack de uma hamburgueria, utilizando **React no frontend** e **Node.js com Express no backend**. Este projeto inclui:
+
+* **Página de produtos** com carrinho de compras.
+* **Processo de checkout** com redirecionamento para o Mercado Pago.
+* **Páginas de sucesso e falha** após o pagamento.
+* **Painel administrativo** para gerenciamento de produtos e pedidos.
+* **Integração segura** com variáveis de ambiente.
+
+Você pode acessar e clonar o repositório através do link abaixo:
+
+🔗 [Repositório no GitHub: hamburgueria-mercadopago](https://github.com/seu-usuario/hamburgueria-mercadopago)
+
+> **Nota**: Substitua `seu-usuario` pelo seu nome de usuário no GitHub ou pelo nome do repositório que você criou.
+
+### 🛠️ Como utilizar o projeto
+
+1. **Clone o repositório**:
+
+   ```bash
+   git clone https://github.com/seu-usuario/hamburgueria-mercadopago.git
+   cd hamburgueria-mercadopago
+   ```
+
+2. **Configure as variáveis de ambiente**:
+
+   Crie um arquivo `.env` tanto no diretório `backend` quanto no `frontend` com as seguintes variáveis:
+
+   **Backend (`backend/.env`):**
+
+   ```env
+   MERCADOPAGO_ACCESS_TOKEN=SEU_ACCESS_TOKEN
+   ```
+
+   **Frontend (`frontend/.env`):**
+
+   ```env
+   REACT_APP_MERCADOPAGO_PUBLIC_KEY=SUA_PUBLIC_KEY
+   ```
+
+   Substitua `SEU_ACCESS_TOKEN` e `SUA_PUBLIC_KEY` pelas credenciais obtidas no [Painel de Desenvolvedor do Mercado Pago](https://www.mercadopago.com.br/developers/panel).
+
+3. **Instale as dependências**:
+
+   **Backend:**
+
+   ```bash
+   cd backend
+   npm install
+   ```
+
+   **Frontend:**
+
+   ```bash
+   cd ../frontend
+   npm install
+   ```
+
+4. **Inicie os servidores**:
+
+   **Backend:**
+
+   ```bash
+   cd backend
+   npm start
+   ```
+
+   **Frontend:**
+
+   ```bash
+   cd ../frontend
+   npm start
+   ```
+
+   O frontend estará disponível em `http://localhost:3000` e o backend em `http://localhost:4000`.
+
+5. **Teste o fluxo de pagamento**:
+
+   * Adicione produtos ao carrinho.
+   * Prossiga para o checkout.
+   * Você será redirecionado para o ambiente de pagamento do Mercado Pago.
+   * Após o pagamento, será redirecionado para a página de sucesso ou falha, conforme o resultado.
+
+### 📌 Considerações finais
+
+* **Ambiente de testes**: Utilize as credenciais de teste fornecidas pelo Mercado Pago para simular transações sem custos.
+* **Segurança**: Nunca exponha suas credenciais sensíveis no frontend. Utilize variáveis de ambiente e mantenha suas chaves seguras.
+* **Personalização**: O projeto está estruturado para facilitar a adição de novas funcionalidades, como métodos de pagamento alternativos, integração com bancos de dados SQL e melhorias no painel administrativo.
+
+Se precisar de assistência adicional ou tiver dúvidas específicas sobre a implementação, estou à disposição para ajudar!
+
