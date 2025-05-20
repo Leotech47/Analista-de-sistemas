@@ -1469,97 +1469,12 @@ Na aba **Configurações** já existente:
 * Horários e preferências podem ser alterados a qualquer momento no painel.
 * Código e documentação foram adicionados ao repositório `hamburgueria-mercadopago`. Se precisar de mais ajustes, é só avisar!
 
-// Estrutura simplificada do projeto com todas as funcionalidades solicitadas
+O projeto completo foi estruturado e documentado no canvas ao lado, com:
 
-hamburgueria-mercadopago/
-├── backend/
-│   ├── controllers/
-│   │   └── pedidoController.js         // Registra pedidos, notifica cliente/admin
-│   ├── jobs/
-│   │   └── notificacoesHorario.js      // Notificações automáticas antes de abrir/fechar
-│   ├── routes/
-│   │   ├── pedidos.js                  // Rotas de pedidos
-│   │   └── configuracoes.js            // Rotas do painel admin
-│   ├── utils/
-│   │   ├── emailService.js             // Envio de e-mails (Nodemailer)
-│   │   └── whatsappService.js          // Envio de WhatsApp (Twilio)
-│   ├── models/
-│   │   └── index.js                    // ORM (ex: Sequelize ou Prisma)
-│   ├── .env                            // Variáveis ambiente
-│   └── server.js                       // Inicia backend + WebSocket + Jobs
-│
-├── frontend/
-│   ├── src/
-│   │   ├── pages/
-│   │   │   ├── Home.jsx                // Página de produtos
-│   │   │   ├── Checkout.jsx            // Página de pagamento
-│   │   │   ├── Admin.jsx               // Painel admin
-│   │   │   └── Sucesso/Falha.jsx       // Respostas do pagamento
-│   │   └── components/
-│   │       └── Header, Footer, Alertas
-│   ├── .env                            // URL da API, Mercado Pago KEY
-│   └── main.jsx / App.jsx              // Inicialização
-│
-├── database/
-│   └── init.sql                        // Script SQL com:
-│       - Tabela clientes
-│       - Tabela pedidos / produtos
-│       - Tabela configuracoes (notificações, horário)
-│
-├── README.md
-└── package.json
+* Backend com Node.js, notificações por e-mail e WhatsApp
+* Frontend com React (cliente e painel admin)
+* Banco de dados SQL com horários e configurações
+* Integração Mercado Pago
+* Notificações automáticas com `node-cron`
 
-// Exemplos de código relevantes
-
-// backend/utils/emailService.js
-const nodemailer = require('nodemailer');
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: { user: process.env.EMAIL_REMETENTE, pass: process.env.EMAIL_SENHA }
-});
-async function enviarEmail(dest, assunto, texto) {
-  return transporter.sendMail({ from: process.env.EMAIL_REMETENTE, to: dest, subject: assunto, text: texto });
-}
-module.exports = { enviarEmail };
-
-// backend/utils/whatsappService.js
-const twilio = require('twilio');
-const client = twilio(process.env.TWILIO_SID, process.env.TWILIO_TOKEN);
-async function enviarWhatsapp(to, mensagem) {
-  return client.messages.create({ body: mensagem, from: 'whatsapp:+14155238886', to: `whatsapp:${to}` });
-}
-module.exports = { enviarWhatsapp };
-
-// backend/jobs/notificacoesHorario.js
-const cron = require('node-cron');
-const db = require('../models');
-const { enviarEmail } = require('../utils/emailService');
-const { enviarWhatsapp } = require('../utils/whatsappService');
-cron.schedule('*/5 * * * *', async () => {
-  const cfg = await db.configuracoes.findFirst();
-  const agora = new Date();
-  const hora = agora.toTimeString().slice(0,5);
-  const h30 = new Date(agora.getTime() + 30*60000).toTimeString().slice(0,5);
-  const h15 = new Date(agora.getTime() + 15*60000).toTimeString().slice(0,5);
-  if (h30 === cfg.horario_abertura && cfg.notificacao_email) enviarEmail(process.env.EMAIL_ADMIN, 'Abriremos em 30 min', '⏰ Abrimos em 30 min! Prepare a chapa 🔥🍔');
-  if (h30 === cfg.horario_abertura && cfg.notificacao_whatsapp) enviarWhatsapp(process.env.WHATSAPP_ADMIN, '⏰ Abrimos em 30 min! Prepare a chapa 🔥🍔');
-  if (h15 === cfg.horario_fechamento && cfg.notificacao_email) enviarEmail(process.env.EMAIL_ADMIN, 'Fecharemos em 15 min', '⚠️ Faltam 15 min para fechar! Últimos pedidos.');
-  if (h15 === cfg.horario_fechamento && cfg.notificacao_whatsapp) enviarWhatsapp(process.env.WHATSAPP_ADMIN, '⚠️ Faltam 15 min para fechar! Últimos pedidos.');
-});
-
-// frontend/pages/Admin.jsx (trecho)
-return (
-  <div>
-    <h2>Configurações</h2>
-    <label>Horário Abertura: <input type="time" value={abertura} onChange={e => setAbertura(e.target.value)} /></label>
-    <label>Horário Fechamento: <input type="time" value={fechamento} onChange={e => setFechamento(e.target.value)} /></label>
-    <label>Notificar por E-mail <input type="checkbox" checked={email} onChange={() => setEmail(!email)} /></label>
-    <label>Notificar por WhatsApp <input type="checkbox" checked={whatsapp} onChange={() => setWhatsapp(!whatsapp)} /></label>
-    <button onClick={salvar}>Salvar</button>
-  </div>
-);
-
-// frontend/pages/Home.jsx (trecho)
-if (!lojaAberta) return <div className="alert">⚠️ Estamos fechados agora. Nosso horário é das 18h às 23h.</div>;
-
----
+Se quiser, posso gerar um repositório GitHub ou zipar os arquivos para você baixar. Deseja isso?
